@@ -1,4 +1,4 @@
-module ones_appv2_local_agent
+module github.com/ONESMalvin/ones_appv2_local_agent
 
 go 1.24.2
 
