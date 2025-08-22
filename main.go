@@ -99,7 +99,7 @@ func main() {
 	// 验证必填参数
 	if *server == "" {
 		fmt.Fprintf(flag.CommandLine.Output(), "Error: server address is required\n")
-		fmt.Fprintf(flag.CommandLine.Output(), "Use -s or --server to specify the relay server address\n\n")
+		fmt.Fprintf(flag.CommandLine.Output(), "Use -s or --server to specify the ONES server address\n\n")
 		flag.Usage()
 		return
 	}
@@ -122,14 +122,14 @@ func main() {
 		return
 	}
 
+	if !strings.HasPrefix(*server, "http") {
+		*server = "https://" + *server
+	}
 	// 构建 relay URL
 	var relayURL string
 	endpoint, err := url.Parse(*server)
 	if err != nil {
 		log.Fatalf("invalid server URL: %v", err)
-	}
-	if endpoint.Scheme == "" {
-		endpoint.Scheme = "https"
 	}
 	if endpoint.Scheme == "http" {
 		relayURL = fmt.Sprintf("ws://%s/platform/plugin_relay/app?app_id=%s", endpoint.Host, *appID)

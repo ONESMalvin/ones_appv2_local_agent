@@ -26,7 +26,7 @@ go install github.com/ONESMalvin/ones_appv2_local_agent@latest
 
 | 参数 | 短参数 | 说明 | 示例值 |
 |------|--------|------|--------|
-| `--server` | `-s` | 中继服务器地址 | `p8205-k3s-9.k3s-dev.myones.net` |
+| `--server` | `-s` | ONES服务器地址 | `https://p8205-k3s-9.k3s-dev.myones.net` |
 | `--app` | `-a` | 应用 ID | `app_F63GRnbJR6xINLyK` |
 | `--token` | `-t` | 认证令牌 | `testmyrelaytoken` |
 | `--port` | `-p` | 本地服务端口 | `8082` |
