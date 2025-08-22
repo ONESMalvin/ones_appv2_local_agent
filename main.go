@@ -124,12 +124,14 @@ func main() {
 
 	// 构建 relay URL
 	var relayURL string
-	if strings.Contains(*server, "://") {
-		// 如果包含协议，直接使用
-		relayURL = fmt.Sprintf("%s/platform/plugin-relay/app_relay?app_id=%s", *server, *appID)
+	endpoint, err := url.Parse(*server)
+	if err != nil {
+		log.Fatalf("invalid server URL: %v", err)
+	}
+	if endpoint.Scheme == "http" {
+		relayURL = fmt.Sprintf("ws://%s/platform/plugin_relay/app?app_id=%s", endpoint.Host, *appID)
 	} else {
-		// 否则使用 ws:// 协议
-		relayURL = fmt.Sprintf("ws://%s/app_relay?app_id=%s", *server, *appID)
+		relayURL = fmt.Sprintf("wss://%s/platform/plugin_relay/app?app_id=%s", endpoint.Host, *appID)
 	}
 
 	target := fmt.Sprintf("http://127.0.0.1:%s", *port)
@@ -153,6 +155,8 @@ func main() {
 			return nil
 		})
 		log.Printf("[agent] dialed %s", relayURL)
+		accessURL := fmt.Sprintf("%s://%s/platform/plugin_relay/app_dispatch/%s", endpoint.Scheme, endpoint.Host, *appID)
+		log.Printf("you can use [%s] to access the target service", accessURL)
 		if err := loop(c, target); err != nil {
 			log.Printf("[agent] loop ended: %v, retrying in 2s", err)
 		}
