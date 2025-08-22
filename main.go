@@ -140,7 +140,7 @@ func main() {
 	if *token != "" {
 		header.Set("Relay-Authorization", "bearer "+*token)
 	}
-	log.Printf("[agent] dialing %s", relayURL)
+	log.Printf("[agent] dialing %s", endpoint.Scheme+"://"+endpoint.Host)
 
 	for {
 		//log.Printf("[agent] dialing %s", relayURL)
@@ -154,9 +154,9 @@ func main() {
 			c.WriteControl(websocket.PongMessage, []byte{}, time.Now().Add(10*time.Second))
 			return nil
 		})
-		log.Printf("[agent] dialed %s", relayURL)
+		log.Printf("[agent] dialed %s", endpoint.Scheme+"://"+endpoint.Host)
 		accessURL := fmt.Sprintf("%s://%s/platform/plugin_relay/app_dispatch/%s", endpoint.Scheme, endpoint.Host, *appID)
-		log.Printf("you can use [%s] to access the target service", accessURL)
+		log.Printf("[agent] endpoint %s", accessURL)
 		if err := loop(c, target); err != nil {
 			log.Printf("[agent] loop ended: %v, retrying in 2s", err)
 		}
