@@ -36,7 +36,7 @@ go install github.com/ONESMalvin/ones_appv2_local_agent@latest
 #### 基本使用
 
 ```bash
-./ones_appv2_local_agent -s p8205-k3s-9.k3s-dev.myones.net \
+./ones_appv2_local_agent -s https://p8205-k3s-9.k3s-dev.myones.net \
               -a app_F63GRnbJR6xINLyK \
               -t testmyrelaytoken \
               -p 8082
@@ -45,7 +45,7 @@ go install github.com/ONESMalvin/ones_appv2_local_agent@latest
 #### 使用长参数
 
 ```bash
-./ones_appv2_local_agent --server p8205-k3s-9.k3s-dev.myones.net \
+./ones_appv2_local_agent --server https://p8205-k3s-9.k3s-dev.myones.net \
               --app app_F63GRnbJR6xINLyK \
               --token testmyrelaytoken \
               --port 8082

@@ -91,7 +91,7 @@ func main() {
 		fmt.Fprintf(flag.CommandLine.Output(), "  -t, --token: testmyrelaytoken\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "  -p, --port: 8082\n")
 		fmt.Fprintf(flag.CommandLine.Output(), "\nExample:\n")
-		fmt.Fprintf(flag.CommandLine.Output(), "  %s -s p8205-k3s-9.k3s-dev.myones.net -a app_F63GRnbJR6xINLyK -t testmyrelaytoken -p 8082\n", flag.CommandLine.Name())
+		fmt.Fprintf(flag.CommandLine.Output(), "  %s -s https://p8205-k3s-9.k3s-dev.myones.net -a app_F63GRnbJR6xINLyK -t testmyrelaytoken -p 8082\n", flag.CommandLine.Name())
 	}
 
 	flag.Parse()
@@ -127,6 +127,9 @@ func main() {
 	endpoint, err := url.Parse(*server)
 	if err != nil {
 		log.Fatalf("invalid server URL: %v", err)
+	}
+	if endpoint.Scheme == "" {
+		endpoint.Scheme = "https"
 	}
 	if endpoint.Scheme == "http" {
 		relayURL = fmt.Sprintf("ws://%s/platform/plugin_relay/app?app_id=%s", endpoint.Host, *appID)
